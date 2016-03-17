@@ -28,36 +28,28 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 	<?php
 		echo $this->Html->meta('icon');
 
-		echo $this->Html->css('cake.generic');
-
-		echo $this->fetch('meta');
-		echo $this->fetch('css');
-		echo $this->fetch('script');
+		//echo $this->Html->css('cake.generic');
+		echo $this->Html->css('ie9');
+		echo $this->Html->css('main');
+		echo $this->Html->css('custom.css');
 	?>
 </head>
 <body>
-	<div id="container">
-		<div id="header">
-			<h1><?php echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?></h1>
-		</div>
-		<div id="content">
 
-			<?php echo $this->Flash->render(); ?>
+	<?php echo $this->Flash->render(); ?>
 
-			<?php echo $this->fetch('content'); ?>
-		</div>
-		<div id="footer">
-			<?php echo $this->Html->link(
-					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
-					'http://www.cakephp.org/',
-					array('target' => '_blank', 'escape' => false, 'id' => 'cake-powered')
-				);
-			?>
-			<p>
-				<?php echo $cakeVersion; ?>
-			</p>
-		</div>
-	</div>
-	<?php echo $this->element('sql_dump'); ?>
+	<?php
+		echo $this->element('header');
+		echo $this->element('navbar-anonym');
+		echo $this->fetch('content');
+		echo $this->element('footer');
+	?>
+		
+	<?php 
+		echo $this->element('sql_dump'); 
+		echo $this->Html->script('jquery.min');
+		echo $this->Html->script('skel.min');
+		echo $this->Html->script('main');
+	?>
 </body>
 </html>

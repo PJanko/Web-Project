@@ -1,0 +1,13 @@
+.message {
+    display: block;
+    padding: 20px;
+    position: relative;
+}
+
+.error {
+	background-color: red;
+}
+
+.success {
+	background-color: green;
+}
