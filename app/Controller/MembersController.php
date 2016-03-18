@@ -62,22 +62,35 @@ class MembersController extends AppController {
 
             $this->Member->create();
             if ($this->Member->save($this->request->data)) {
-                $this->Flash->success(__("L'utilisateur à été correctement enregistré !"));
+                $this->Flash->success(__("L'utilisateur a été correctement enregistré !"));
                 return $this->redirect(array('action' => 'login'));
             }
-            $this->Flash->error(__("L'utilisateur n'a pas pu être enregister, veuillez réessayer !"));
+            $this->Flash->error(__("L'utilisateur n'a pas pu être enregistré, veuillez réessayer !"));
             return $this->redirect(array('action' => 'login'));
         }
 	}
+	
+	public function account() {
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.username' => $this->Auth->user()['Member']['username'])));
+		$this->set('userInfo', $user);
+	}
+	
+	/*
+	public function dateFrToUsa() {  
+		$myinput='12/15/2005'; 
+		$sqldate=date('Y-m-d',strtotime($myinput)); 
+	}
 
+	public function dateUsaToFr() {  
+		$sqldate= $this->Member->find('first', array( 'conditions' => array('Member.naissance' => $this->Auth->user()['Member']['naissance'])));
+		$myinput=date('d/m/Y',strtotime($sqldate)); 
+	}	*/
 	// Login with Facebook and Google
 	public function socialLogin() {
 
 	}
 
-	public function account() {
-
-	}
+	
 
 }
 
