@@ -24,7 +24,7 @@ class MembersController extends AppController {
 
 	public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow('login','register', 'socialLogin', 'logout');
+        $this->Auth->allow(/*'login','register', 'socialLogin', 'logout'*/);
     }
 
 	public function beforeRender() {
@@ -42,12 +42,12 @@ class MembersController extends AppController {
 	        if ($this->Auth->login($this->request->data)) {
 	            return $this->redirect($this->Auth->redirectUrl());
 	        }
-	        $this->Flash->error(__("Le nom d'utilisateur ou le mot de passe ne correspondent pas"));
+	        $this->Flash->error(__("L'email ou le mot de passe ne correspondent pas"));
 	    }
 	}
 
 	// Logout
-	public function logout() {
+	public function logout() {       
 		return $this->redirect($this->Auth->logout());
 	}
 
@@ -72,11 +72,11 @@ class MembersController extends AppController {
 
 	// Login with Facebook and Google
 	public function socialLogin() {
-
 	}
 
 	public function account() {
-
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
+		$this->set('userInfo', $user);
 	}
 
 }

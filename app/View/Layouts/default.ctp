@@ -40,13 +40,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 	<?php
 		echo $this->element('header');
-		echo $this->element('navbar-anonym');
+		if($authUser) {
+			echo $this->element('navbar-authenticated');
+		} else {
+			echo $this->element('navbar-anonym');
+		}
 		echo $this->fetch('content');
 		echo $this->element('footer');
 	?>
 		
 	<?php 
-		echo $this->element('sql_dump'); 
+		//echo $this->element('sql_dump'); 
 		echo $this->Html->script('jquery.min');
 		echo $this->Html->script('skel.min');
 		echo $this->Html->script('main');

@@ -13,7 +13,6 @@
 								<h3>Inscris-toi via notre formulaire</h3>
 							</header>
 							<?php echo $this->Form->create('Member',array('action' => 'register','method' => 'post'));?>
-								<input name="data[Member][username]" type="text" placeholder="Nom d'utilisateur">
 								<input name="data[Member][email]" type="text" placeholder="E-Mail">
 								<input name="data[Member][password]" type="password" placeholder="Mot de Passe">
 								<input name="data[Member][confirm]" type="password" placeholder="Confirmation">
@@ -31,7 +30,7 @@
 								<h3>Connectes toi pour profiter de nos services</h3>
 							</header>
 							<?php echo $this->Form->create('Member',array('action' => 'login','method' => 'post'));?>
-								<input name="data[Member][username]" type="text" placeholder="Nom d'utilisateur">
+								<input name="data[Member][email]" type="text" placeholder="E-Mail">
 								<input name="data[Member][password]" type="password" placeholder="Mot de Passe">
 								<input class="button-big" type="submit" value="Connecter">
 							<?php echo $this->Form->end(); ?>

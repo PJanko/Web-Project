@@ -5,9 +5,69 @@
 }
 
 .error {
-	background-color: red;
+	background-color: #ed391b;
 }
 
 .success {
-	background-color: green;
+	background-color: #27ae60;
+}
+
+.button-medium {
+		display: inline-block;
+		background-color: #ed391b;
+		color: #fff;
+		text-decoration: none;
+		font-size: 1.75em;
+		font-weight: 300;
+		padding: 5px 15px 5px 15px;
+		outline: 0;
+		border-radius: 10px;
+		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.5);
+	}
+
+		.button-medium:hover {
+			background-color: #fd492b;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+		.button-medium:active {
+			background-color: #ce1a00;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(255, 192, 192, 0.5), inset 0px 0px 0px 2px rgba(255, 96, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+	.button-medium.green {
+		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		background-color: #27ae60;
+	}
+		.button-medium.green:hover {
+			background-color: #2ecc71;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+		.button-medium.green:active {
+			background-color: #2ecc71;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+	.button-medium.orange {
+		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		background-color: #e67e22;
+	}
+		.button-medium.orange:hover {
+			background-color: #f39c12;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+		.button-medium.orange:active {
+			background-color: #f39c12;
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		}
+
+
+
+
+
+#content .quote-list a {
+	color: #fff;
 }

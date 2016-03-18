@@ -46,12 +46,12 @@ class AppController extends Controller {
             ),
             'logoutRedirect' => array(
                 'controller' => 'pages',
-                'action' => 'accueil',
-                'home'
+                'action' => 'accueil'
             ),
             'authenticate' => array(
                 'Form' => array(
                     'userModel' => 'Member',
+                    'fields' => array( 'username' => 'email' ),
                     'passwordHasher' => 'Blowfish'
                 )
             )
@@ -59,6 +59,11 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
-        $this->Auth->allow('display', 'index', 'view');
+        //$this->Auth->allow('display', 'index', 'view');
+        $this->Auth->allow(); // Allow all (unlock the project)
+    }
+
+    public function beforeRender() {
+        $this->set('authUser', $this->Auth->user());
     }
 }
