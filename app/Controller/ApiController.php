@@ -78,7 +78,7 @@ class ApiController extends AppController {
 			if($workout) $workout = $workout['Workout'];
 			if($device) $device = $device['Device'];
 
-			if($workout['member_id'] == $device['member_id']) {
+			if($workout['member_id'] == $device['member_id'] && $device['trusted'] == 1) {
 
 				$log = $this->Log->find('first', array('conditions' => array('Log.workout_id' => $workout['id'], 'Log.device_id' => $device['id'])));
 				if($log) $log = $log['Log'];
@@ -103,12 +103,86 @@ class ApiController extends AppController {
 		}
 	}
 
-	public function getsummary() {
+	/**
+	 *	Récupérer les dernières notes de séance (3 dernières)
+	 */
+	public function getsummary($s=null) {
+		$qLast = "SELECT * FROM workouts WHERE date < NOW() ORDER BY date DESC LIMIT 3";
+		$qNext = "SELECT * FROM workouts WHERE date > NOW() ORDER BY date ASC LIMIT 1";
 
+		if(isset($s)) {
+			$last = $this->Workout->query($qLast);
+			$next = $this->Workout->query($qNext);
+
+			if($last) {
+				// Format the ouput
+				$obj = array('past' => array(), 'coming' => array());
+				foreach($last as $workout) {
+					$desc = array(
+						"location" => $workout['workouts']['location_name'], 
+						"description" => $workout['workouts']['description'],
+						"sport" => $workout['workouts']['sport'],
+						"date" => $workout['workouts']['date']);
+					array_push($obj['past'], $desc);
+				}
+				if($next) {
+					foreach($next as $workout) {
+						$desc = array(
+							"location" => $workout['workouts']['location_name'], 
+							"description" => $workout['workouts']['description'],
+							"sport" => $workout['workouts']['sport'],
+							"date" => $workout['workouts']['date']);
+						array_push($obj['coming'], $desc);
+					}
+				}
+				$this->response->statusCode(200);
+				$this->set('past', $obj['past']);
+				$this->set('coming', $obj['coming']);
+				return $this->set('_serialize', array('past', 'coming'));
+			} else {
+				$this->response->statusCode(404); // Not Found
+	        	return $this->set('_serialize', array()); // Nothing to serialize
+			}	
+		} else {
+			// Des informations sont manquantes
+			$this->response->statusCode(400); 	// Bad request - missing arguments
+        	return $this->set('_serialize', array()); // Nothing to serialize
+		}
 	}
 
-	public function addlog() {
+	/**
+	 *	/api/addlog/b6789/110/2 (ajoute 2 points au membre 23 sur le match 110 en se déclarant comme l’objet b6789)
+	 */
+	public function addlog($s, $w, $p) {
+		if(isset($s) && isset($w) && isset($p)) {
 
+			$workout = $this->Workout->findById($w);
+			$device = $this->Device->findBySerial($s);
+
+			if($workout) $workout = $workout['Workout'];
+			if($device) $device = $device['Device'];
+
+			if($workout['member_id'] == $device['member_id'] && $device['trusted'] == 1) {
+
+				$this->Log->create();
+				$this->Log->save(array(
+					'member_id' => $workout['member_id'],
+					'workout_id' => $workout['id'],
+					'device_id' => $device['id'],
+					'date' => date("Y-m-d H:i:s"),
+					'log_value' => $p
+					));
+				$this->response->statusCode(201);
+				return $this->set('_serialize', array());
+			} else {
+				$this->response->statusCode(401); // Unauthorized
+        		return $this->set('_serialize', array()); // Nothing to serialize
+			}
+		} else {
+			// Des informations sont manquantes
+			$this->response->statusCode(400); 	// Bad request - missing arguments
+        	return $this->set('_serialize', array()); // Nothing to serialize
+		}
 	}
 
 }
