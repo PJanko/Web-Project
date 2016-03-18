@@ -35,7 +35,7 @@ class DevicesController extends AppController {
 	public function index() {
 		// Load the model 
 		$this->loadModel('Member');
-
+		
 		// Get the user defined in the database
 		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])))['Member'];
 		// Get the list of devices that match the owner ID
