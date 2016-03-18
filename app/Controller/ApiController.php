@@ -23,7 +23,7 @@ App::uses('AppController', 'Controller');
 class ApiController extends AppController {
 
 	public $components = array('RequestHandler');
-	public $uses = array('Device', 'Member');
+	public $uses = array('Device', 'Member', 'Workout', 'Log');
 
 	public function beforeFilter() {
         parent::beforeFilter();
@@ -39,7 +39,7 @@ class ApiController extends AppController {
 	 * @param $i The ID of the member to register to
 	 * @param $d The description of the object
 	 */
-	public function registerobject($i, $s, $d) {
+	public function registerobject($i=null, $s=null, $d=null) {
 		
 		if(isset($s) && isset($i) && isset($d)) {
 			// Les variables sont toutes envoyées
@@ -67,9 +67,40 @@ class ApiController extends AppController {
 		}
 	}
 
+	/**
+	 * récupère les scores de la session $w en se déclarant comme l’objet $s
+	 */
+	public function sessionparameters($s=null, $w=null) {
+		if(isset($s) && isset($w)) {
 
-	public function sessionparameters() {
-		
+			$workout = $this->Workout->findById($w);
+			$device = $this->Device->findBySerial($s);
+			if($workout) $workout = $workout['Workout'];
+			if($device) $device = $device['Device'];
+
+			if($workout['member_id'] == $device['member_id']) {
+
+				$log = $this->Log->find('first', array('conditions' => array('Log.workout_id' => $workout['id'], 'Log.device_id' => $device['id'])));
+				if($log) $log = $log['Log'];
+
+				if($log) {
+					$this->response->statusCode(200);
+					$this->set('type', $log['log_type']);
+					$this->set('value', $log['log_value']);
+					return $this->set('_serialize', array('type', 'value'));
+				} else {
+					$this->response->statusCode(404); // Not Found
+        			return $this->set('_serialize', array()); // Nothing to serialize
+				}
+			} else {
+				$this->response->statusCode(401); // Unauthorized
+        		return $this->set('_serialize', array()); // Nothing to serialize
+			}
+		} else {
+			// Des informations sont manquantes
+			$this->response->statusCode(400); 	// Bad request - missing arguments
+        	return $this->set('_serialize', array()); // Nothing to serialize
+		}
 	}
 
 	public function getsummary() {
