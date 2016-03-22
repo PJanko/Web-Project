@@ -37,7 +37,8 @@ class DevicesController extends AppController {
 		$this->loadModel('Member');
 		
 		// Get the user defined in the database
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])))['Member'];
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
+		if($user) $user = $user['Member'];
 		// Get the list of devices that match the owner ID
 		$trusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $user['id'], 'Device.trusted' => 1)));
 		$untrusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $user['id'], 'Device.trusted' => 0)));

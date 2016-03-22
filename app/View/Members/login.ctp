@@ -16,7 +16,7 @@
 								<input name="data[Member][email]" type="text" placeholder="E-Mail">
 								<input name="data[Member][password]" type="password" placeholder="Mot de Passe">
 								<input name="data[Member][confirm]" type="password" placeholder="Confirmation">
-								<input class="button-big" type="submit" value="Enregister">
+								<input class="button-medium" type="submit" value="Enregister">
 							<?php echo $this->Form->end(); ?>
 						</section>
 
@@ -32,7 +32,7 @@
 							<?php echo $this->Form->create('Member',array('action' => 'login','method' => 'post'));?>
 								<input name="data[Member][email]" type="text" placeholder="E-Mail">
 								<input name="data[Member][password]" type="password" placeholder="Mot de Passe">
-								<input class="button-big" type="submit" value="Connecter">
+								<input class="button-medium" type="submit" value="Connecter">
 							<?php echo $this->Form->end(); ?>
 						</section>
 
@@ -43,9 +43,23 @@
 						<section>
 							<header>
 								<h2>Présent sur les réseaux sociaux ?</h2>
-								<h3>Connecte toi rapidement avec Google et Facebook</h3>
 							</header>
-							
+							<div class="social-login">
+								<?php echo $this->Html->link(
+									    '<i class="fa fa-facebook-official"></i><span>Connecte-toi avec Facebook</span>',
+									    array('action'=>'social_login', 'Facebook'),
+									    array('escape' => false)
+									);
+								?>
+							</div>
+							<div class="social-login">
+								<?php echo $this->Html->link(
+									    '<i class="fa fa-google-plus-square"></i><span>Connecte-toi  avec  Google  </span>',
+									    array('action'=>'social_login', 'Google'),
+									    array('escape' => false)
+									);
+								?>
+							</div>							
 						</section>
 
 				</div>

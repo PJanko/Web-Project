@@ -49,6 +49,31 @@ class Member extends AppModel {
 	    }
 	    return true;
 	}
+
+    /*
+     *
+     */
+
+    public function createFromSocialProfile($incomingProfile){
+        // check to ensure that we are not using an email that already exists
+        $existingUser = $this->find('first', array(
+            'conditions' => array('email' => $incomingProfile['SocialProfile']['email'])));
+         
+        if($existingUser){
+            // this email address is already associated to a member
+            return $existingUser;
+        }
+         
+        // brand new user
+        $socialUser['Member']['email'] = $incomingProfile['SocialProfile']['email'];
+        $socialUser['Member']['password'] = date('Y-m-d h:i:s'); // although it technically means nothing, we still need a password for social. setting it to something random like the current time..
+         
+        // save and store our ID
+        $this->save($socialUser);
+        $socialUser['Member']['id'] = $this->id;
+         
+        return $socialUser;
+    }
 }
 
 ?>

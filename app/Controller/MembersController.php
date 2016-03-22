@@ -22,9 +22,11 @@ App::uses('AppController', 'Controller');
 
 class MembersController extends AppController {
 
+	var $uses = array('Member','SocialProfile');
+
 	public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow(/*'login','register', 'socialLogin', 'logout'*/);
+        $this->Auth->allow(/*'login','register', 'social_login','social_endpoint'*/);
     }
 
 	public function beforeRender() {
@@ -47,7 +49,8 @@ class MembersController extends AppController {
 	}
 
 	// Logout
-	public function logout() {       
+	public function logout() {
+		$this->Hybridauth->logout();
 		return $this->redirect($this->Auth->logout());
 	}
 
@@ -71,22 +74,80 @@ class MembersController extends AppController {
 	}
 	
 	public function account() {
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.username' => $this->Auth->user()['Member']['username'])));
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
 		$this->set('userInfo', $user);
 	}
 	
-	/*
-	public function dateFrToUsa() {  
-		$myinput='12/15/2005'; 
-		$sqldate=date('Y-m-d',strtotime($myinput)); 
+	/** 
+	 *	Code from http://miftyisbored.com/complete-social-login-application-tutorial-cakephp-2-3-twitter-facebook-google/
+	 */
+
+	// Login with Facebook and Google
+	public function social_login($provider) {
+	    if( $this->Hybridauth->connect($provider) ){
+	        $this->_successfulHybridauth($provider,$this->Hybridauth->user_profile);
+	        $this->redirect($this->Auth->loginRedirect);
+	    } else {
+	        // error
+	        $this->Flash->error($this->Hybridauth->error);
+	        $this->redirect($this->Auth->loginAction);
+	    }
 	}
 
-	public function dateUsaToFr() {  
-		$sqldate= $this->Member->find('first', array( 'conditions' => array('Member.naissance' => $this->Auth->user()['Member']['naissance'])));
-		$myinput=date('d/m/Y',strtotime($sqldate)); 
-	}	*/
-	// Login with Facebook and Google
-	public function socialLogin() {
+	private function _successfulHybridauth($provider, $incomingProfile){
+    	// #1 - check if user already authenticated using this provider before
+	    $this->SocialProfile->recursive = -1;
+	    $existingProfile = $this->SocialProfile->find('first', array(
+	        'conditions' => array('social_network_id' => $incomingProfile['SocialProfile']['social_network_id'], 'social_network_name' => $provider)
+	    ));
+	     
+	    if ($existingProfile) {
+	        // #2 - if an existing profile is available, then we set the user as connected and log them in
+	        $user = $this->Member->find('first', array(
+	            'conditions' => array('id' => $existingProfile['SocialProfile']['user_id'])
+	        ));
+	         
+	        $this->_doSocialLogin($user,true);
+	    } else {
+	         
+	        // New profile.
+	        if ($this->Auth->loggedIn()) {
+	            // user is already logged-in , attach profile to logged in user.
+	            // create social profile linked to current user
+	            $incomingProfile['SocialProfile']['user_id'] = $this->Auth->user('id');
+	            $this->SocialProfile->save($incomingProfile);
+	             
+	            $this->Flash->success('Your ' . $incomingProfile['SocialProfile']['social_network_name'] . ' account is now linked to your account.');
+	            $this->redirect($this->Auth->redirectUrl());
+	 
+	        } else {
+	            // no-one logged and no profile, must be a registration.
+	            $user = $this->Member->createFromSocialProfile($incomingProfile);
+	            $incomingProfile['SocialProfile']['user_id'] = $user['Member']['id'];
+	            $this->SocialProfile->save($incomingProfile);
+	 
+	            // log in with the newly created user
+	            $this->_doSocialLogin($user);
+	        }
+	    }   
+	}
+
+	private function _doSocialLogin($user, $returning = false) {
+	    if ($this->Auth->login($user)) {
+	        if($returning){
+	            $this->Flash->success(__('Welcome back, '. $this->Auth->user('username')));
+	        } else {
+	            $this->Flash->success(__('Welcome to our community, '. $this->Auth->user('username')));
+	        }
+	        $this->redirect($this->Auth->loginRedirect);
+	         
+	    } else {
+	        $this->Flash->error(__('Unknown Error could not verify the user: '. $this->Auth->user('username')));
+	    }
+	}
+
+	public function social_endpoint() {
+	    $this->Hybridauth->processEndpoint();
 	}
 
 }

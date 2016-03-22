@@ -383,3 +383,19 @@ Cache::config('_cake_model_', array(
 	'serialize' => ($engine === 'File'),
 	'duration' => $duration
 ));
+
+
+Configure::write('Hybridauth', 
+	array(
+		// openid providers
+		"Google" => array(
+			"enabled" => true,
+			"keys" => array("id" => "357604833352-ke4c7f3clvd2cgo1ape4i5qr2tvt9upn.apps.googleusercontent.com", "secret" => "32yL1ufPJPcO1ksPPbh06bv0"),
+		),
+		"Facebook" => array(
+			"enabled" => true,
+			"keys" => array("id" => "1701223353494383", "secret" => "7252998564ac4eafb21296d4c4aa253e"),
+			"trustForwarded" => false
+		)
+	)
+);

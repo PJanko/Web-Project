@@ -33,10 +33,12 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		echo $this->Html->css('main');
 		echo $this->Html->css('custom.css');
 	?>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 </head>
 <body>
-
 	<?php echo $this->Flash->render(); ?>
+
+	<?php //echo $this->element('facebook-insert'); ?>
 
 	<?php
 		echo $this->element('header');
@@ -51,6 +53,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 		
 	<?php 
 		//echo $this->element('sql_dump'); 
+		//echo $this->element('facebook-sdk');
 		echo $this->Html->script('jquery.min');
 		echo $this->Html->script('skel.min');
 		echo $this->Html->script('main');

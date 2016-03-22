@@ -71,3 +71,20 @@
 #content .quote-list a {
 	color: #fff;
 }
+
+
+div a i.fa {
+	font-size: 2em;
+	vertical-align: middle;
+}
+div a span {
+	margin-left: 10px;
+}
+
+div.social-login {
+	margin-left: 5%;
+}
+
+input, textarea, select {
+	width: 100%;
+}

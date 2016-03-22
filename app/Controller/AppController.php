@@ -55,11 +55,13 @@ class AppController extends Controller {
                     'passwordHasher' => 'Blowfish'
                 )
             )
-        )
+        ),
+        'Hybridauth'
     );
 
     public function beforeFilter() {
         //$this->Auth->allow('display', 'index', 'view');
+        if(!isset($_SESSION)) session_start();
         $this->Auth->allow(); // Allow all (unlock the project)
     }
 
