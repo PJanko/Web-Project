@@ -19,6 +19,7 @@
  */
 
 App::uses('AppController', 'Controller');
+App::uses('BlowfishPasswordHasher', 'Controller/Component/Auth');
 
 class MembersController extends AppController {
 
@@ -57,7 +58,7 @@ class MembersController extends AppController {
 	// Register a new user
 	public function register() {
 		if ($this->request->is('post')) {
-
+			
 			if($this->request->data['Member']['password'] != $this->request->data['Member']['confirm']) {
 				$this->Flash->error(__('Les mots de passe ne correspondent pas'));
 				return $this->redirect(array('action' => 'login'));
@@ -74,7 +75,55 @@ class MembersController extends AppController {
 	}
 	
 	public function account() {
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['email'])));
 		$this->set('userInfo', $this->Auth->user());
+	}
+	
+	
+	public function changepassword() {
+		//Accès aux infos liés à l'ID	
+		$user = $this->Member->findByEmail($this->Auth->user()['email']);
+		
+		//Récupération du mot de passe hashé dans la BDD
+		$storedHash = $user['Member']['password'];
+		
+					
+		//Hashage de l'ancien mot de passe saisie par l'utilisation
+		$newHash = Security::hash($this->request->data['Member']['old_password'], 'blowfish', $storedHash);
+		
+		//Tronquage du hashage au 45 premiers caractères
+		//$oldpass45 = substr ($newHash , 0, 45);
+		
+		//Création variable correct pour vérifier si le mot de passe saisie correspond à celui dans la base de données
+		// $correct = $storedHash == $oldpass45;	
+		
+		if ($storedHash == $newHash) {
+			//Vérification que la saisie du nouveau mot de passe et de sa confirmation
+			if ($this->request->data['Member']['new_password'] == $this->request->data['Member']['confirm_password']){
+				//Récupération du nouveau mot de passe saisie par l'utilisateur
+				$user['Member']['password'] = $this->request->data['Member']['new_password'];
+				
+				//Enregistrer member avec new_password
+				
+				//$this->Member->saveField($this->request->data['Member']['password'], $password_bdd['Member']['password']);
+				
+				$this->Member->save($user);
+						
+				
+				//Remplacer le password de la BDD par le new_password hashé
+				$this->Flash->success(__('Mot de passe modifié'));
+				return $this->redirect(array('action' => 'account'));
+			}
+			
+			else {
+				$this->Flash->error(__('Les mots de passe ne correspondent pas'));
+				return $this->redirect(array('action' => 'account'));
+			}
+		}
+		else {
+			$this->Flash->error(__('Le mot de passe saisie ne correspond pas à votre ancien mot de passe'));
+			return $this->redirect(array('action' => 'account'));
+		}
 	}
 	
 	/** 
