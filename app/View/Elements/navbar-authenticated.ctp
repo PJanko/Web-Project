@@ -13,8 +13,9 @@
 				<nav id="nav">
 					<?php
 						echo $this->Html->link('Classements', array('controller' => 'members', 'action' => 'login'));
-						echo $this->Html->link('Mes Séances', array('controller' => 'pages', 'action' => 'accueil'));
-						echo $this->Html->link('Objets Connectés', array('controller' => 'devices', 'action' => 'index'));
+						echo $this->Html->link('Séances', array('controller' => 'pages', 'action' => 'accueil'));
+						echo $this->Html->link('Compétitions', array('controller' => 'contests', 'action' => 'index'));
+						echo $this->Html->link('Objets Co', array('controller' => 'devices', 'action' => 'index'));
 						echo $this->Html->link('Mon Compte', array('controller' => 'members', 'action' => 'account'));
 		                echo $this->Html->link('Se Déconnecter', array('controller' => 'members', 'action' => 'logout'));
 		            ?>

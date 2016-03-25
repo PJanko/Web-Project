@@ -93,6 +93,8 @@ class ContestsController extends AppController {
             return $this->redirect(array('action' => 'index'));
         }
 
+        $contest = $contest['Contest'];
+
         // Get the associated workouts
         $workouts = $this->Workout->find('all', array('conditions' => array('contest_id' => $id)));
         if(empty($workouts)) {
@@ -103,12 +105,15 @@ class ContestsController extends AppController {
         $member1 = $this->Member->find('first', array('conditions' => array('id' => $workouts[0]['Workout']['member_id'] )));
         if(isset($workouts[1])) {
             $member2 = $this->Member->find('first', array('conditions' => array('id' => $workouts[1]['Workout']['member_id'] )));
-            $this->set('member2', $member2); 
+            $contest['Member2'] = array('email' => $member2['Member']['email'], 'id' => $member2['Member']['id']);
         }
+        $contest['Member1'] = array('email' => $member1['Member']['email'], 'id' => $member1['Member']['id']);
+        $contest['Workout'] = array('date' => $this->createDate($workouts[0]['Workout']['date']), 
+                                    'location' => $workouts[0]['Workout']['location_name'],
+                                    'description' => $workouts[0]['Workout']['description'],
+                                    'sport' => $workouts[0]['Workout']['sport']);
 
         $this->set('contest', $contest);
-        $this->set('workouts', $workouts);
-        $this->set('member1', $member1);  
     }
 
     // Fin d'un match
@@ -136,6 +141,11 @@ class ContestsController extends AppController {
             $this->Flash->error("Vous ne pouvez plus vous enregister sur ce match !");
         }
         return $this->redirect(array('action' => 'index'));
+    }
+
+    private function createDate($date) {
+        $phpdate = strtotime( $date );
+        return date( 'l d F Y H:i', $phpdate );
     }
 
 }

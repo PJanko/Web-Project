@@ -22,9 +22,11 @@ App::uses('AppController', 'Controller');
 
 class DevicesController extends AppController {
 
+	var $uses = array('Device', 'Member');
+
 	public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allow(/*'login','register', 'socialLogin', 'logout'*/);
+        $this->Auth->deny();
     }
 
 	public function beforeRender() {
@@ -33,15 +35,10 @@ class DevicesController extends AppController {
 
 	// Redirect to login
 	public function index() {
-		// Load the model 
-		$this->loadModel('Member');
 		
-		// Get the user defined in the database
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
-		if($user) $user = $user['Member'];
 		// Get the list of devices that match the owner ID
-		$trusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $user['id'], 'Device.trusted' => 1)));
-		$untrusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $user['id'], 'Device.trusted' => 0)));
+		$trusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $this->Auth->user('id'), 'Device.trusted' => 1)));
+		$untrusted = $this->Device->find('all', array('conditions' => array('Device.member_id' => $this->Auth->user('id'), 'Device.trusted' => 0)));
 
 		$this->set('trusted', $trusted);
 		$this->set('untrusted', $untrusted);
@@ -49,12 +46,11 @@ class DevicesController extends AppController {
 
 	public function allow($id) {
 
-		$this->loadModel('Member');
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])))['Member'];
+		$device = $this->Device->findById($id);
+		
+		if(!empty($device)) $device = $device['Device'];
 
-		$device = $this->Device->findById($id)['Device'];
-
-		if($device['member_id'] == $user['id']) {
+		if($device['member_id'] == $this->Auth->user('id')) {
 			$this->Device->id = $id;
 			$this->Device->saveField('trusted', 1);
 			$this->Flash->success(__("L'objet \"".$device['description']."\" peut désormais accéder à votre compte."));
@@ -66,12 +62,10 @@ class DevicesController extends AppController {
 	}
 
 	public function delete($id) {
-		$this->loadModel('Member');
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])))['Member'];
 
 		$device = $this->Device->findById($id)['Device'];
 
-		if($device['member_id'] == $user['id']) {
+		if($device['member_id'] == $this->Auth->user('id')) {
 			$this->Device->delete($id);
 			$this->Flash->success(__("L'objet \"".$device['description']."\" a été correctement supprimé de votre liste !"));
 			return $this->redirect(array('action' => 'index'));
@@ -83,12 +77,11 @@ class DevicesController extends AppController {
 	
 	public function deny($id) {
 
-		$this->loadModel('Member');
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])))['Member'];
-
 		$device = $this->Device->findById($id)['Device'];
 
-		if($device['member_id'] == $user['id']) {
+		if(!empty($device)) $device = $device['Device'];
+
+		if($device['member_id'] == $this->Auth->user('id')) {
 			$this->Device->id = $id;
 			$this->Device->saveField('trusted', 0);
 			$this->Flash->success(__("L'objet \"".$device['description']."\" ne peut plus accéder à votre compte."));

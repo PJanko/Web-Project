@@ -26,7 +26,7 @@ class MembersController extends AppController {
 
 	public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('login','register', 'social_login','social_endpoint');
+        $this->Auth->allow('account', 'index', 'login','register', 'social_login','social_endpoint');
     }
 
 	public function beforeRender() {
@@ -74,8 +74,7 @@ class MembersController extends AppController {
 	}
 	
 	public function account() {
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
-		$this->set('userInfo', $user);
+		$this->set('userInfo', $this->Auth->user());
 	}
 	
 	/** 

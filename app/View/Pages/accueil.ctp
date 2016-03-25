@@ -57,7 +57,7 @@
 
 									<!-- Feature #3 -->
 										<section>
-											<a href="#" class="bordered-feature-image"><img src="../img/pic03.jpg" alt="" /></a>
+											<a href="#" class="bordered-feature-image"><img src="/img/profil.png" alt="" /></a>
 											<h2>License Info</h2>
 											<p>
 												Halcyonic is licensed under the <a href="http://html5up.net/license">CCA 3.0</a> license,
