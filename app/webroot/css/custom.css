@@ -72,6 +72,9 @@
 	color: #fff;
 }
 
+.quote-list li.full {
+	background: rgba(0, 0, 0, 0) url("images/icon-checkmark.png") no-repeat scroll 1.05em;
+}
 
 div a i.fa {
 	font-size: 2em;
