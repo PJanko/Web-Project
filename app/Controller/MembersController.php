@@ -27,7 +27,7 @@ class MembersController extends AppController {
 
 	public function beforeFilter() {
         parent::beforeFilter();
-        //$this->Auth->allow('login','register', 'social_login','social_endpoint');
+        $this->Auth->allow(/*'login','register', 'social_login','social_endpoint'*/);
     }
 
 	public function beforeRender() {
@@ -58,7 +58,7 @@ class MembersController extends AppController {
 	// Register a new user
 	public function register() {
 		if ($this->request->is('post')) {
-
+			
 			if($this->request->data['Member']['password'] != $this->request->data['Member']['confirm']) {
 				$this->Flash->error(__('Les mots de passe ne correspondent pas'));
 				return $this->redirect(array('action' => 'login'));
@@ -75,45 +75,39 @@ class MembersController extends AppController {
 	}
 	
 	public function account() {
-		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['Member']['email'])));
-		$this->set('userInfo', $user);
+		$user = $this->Member->find('first', array( 'conditions' => array('Member.email' => $this->Auth->user()['email'])));
+		$this->set('userInfo', $this->Auth->user());
 	}
 	
 	
 	public function changepassword() {
-		$user = $this->Member->find('first', array(
-		  	'conditions' => array(
-		    	'Member.email' => AuthComponent::user('email')
-				),
-			'fields' => array('password')
-			));
 		//Accès aux infos liés à l'ID	
-		$password_bdd = $this->Member->findByEmail($this->Auth->user()['Member']['email']);
+		$user = $this->Member->findByEmail($this->Auth->user()['email']);
 		
 		//Récupération du mot de passe hashé dans la BDD
-		$storedHash = $password_bdd['Member']['password'];
+		$storedHash = $user['Member']['password'];
 		
 					
 		//Hashage de l'ancien mot de passe saisie par l'utilisation
 		$newHash = Security::hash($this->request->data['Member']['old_password'], 'blowfish', $storedHash);
 		
 		//Tronquage du hashage au 45 premiers caractères
-		$oldpass45 = substr ($newHash , 0, 45);
+		//$oldpass45 = substr ($newHash , 0, 45);
 		
 		//Création variable correct pour vérifier si le mot de passe saisie correspond à celui dans la base de données
 		// $correct = $storedHash == $oldpass45;	
 		
-		if ($storedHash == $oldpass45) {
+		if ($storedHash == $newHash) {
 			//Vérification que la saisie du nouveau mot de passe et de sa confirmation
 			if ($this->request->data['Member']['new_password'] == $this->request->data['Member']['confirm_password']){
 				//Récupération du nouveau mot de passe saisie par l'utilisateur
-				$this->request->data['Member']['password'] = $this->request->data['Member']['new_password'];
+				$user['Member']['password'] = $this->request->data['Member']['new_password'];
 				
 				//Enregistrer member avec new_password
 				
-				$this->Member->saveField($this->request->data['Member']['password'], $password_bdd['Member']['password']);
+				//$this->Member->saveField($this->request->data['Member']['password'], $password_bdd['Member']['password']);
 				
-				//$this->Member->save($this->request->data);
+				$this->Member->save($user);
 						
 				
 				//Remplacer le password de la BDD par le new_password hashé

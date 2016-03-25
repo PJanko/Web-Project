@@ -16,7 +16,7 @@ Member.cp
 								<a href="#" class="bordered-feature-image"><img src="../img/profil.png" alt="" /></a>
 							
 								<h3> 
-								  <?php print_r($userInfo['Member']['email']);?> 
+								  <?php print_r($userInfo['email']);?> 
 								</h3>
 								<?php echo $this->Form->create('Member',array('action' => 'changepassword','method' => 'post'));?>
 								<input name="data[Member][old_password]" type="password" placeholder="Ancien Mot de Passe">
