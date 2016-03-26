@@ -71,8 +71,34 @@ class Member extends AppModel {
         // save and store our ID
         $this->save($socialUser);
         $socialUser['Member']['id'] = $this->id;
-         
-        return $socialUser;
+        unset($socialUser['Member']['password']);
+        
+        return $socialUser['Member'];
+    }
+
+    public function createImageAbsPath($id) {
+        return IMAGES.'profil'.DS.$id.'.jpg';
+    }
+    public function createImagePath($id) {
+        return file_exists($this->createImageAbsPath($id)) ? 'profil'.DS.$id.'.jpg' : 'profil.png';
+    }
+
+    public function getImageFromURL($url, $id) {
+        $saveto = $this->createImageAbsPath($id);
+        $ch = curl_init ($url);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch,CURLOPT_USERAGENT,'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_BINARYTRANSFER,1);
+        $raw=curl_exec($ch);
+        curl_close ($ch);
+        if(file_exists($saveto)){
+            unlink($saveto);
+        }
+        $fp = fopen($saveto,'x');
+        fwrite($fp, $raw);
+        fclose($fp);
     }
 }
 

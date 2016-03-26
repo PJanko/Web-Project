@@ -1,4 +1,3 @@
-	</div>
 	<div id="features-wrapper">
 		<div id="features">
 			<div class="container">

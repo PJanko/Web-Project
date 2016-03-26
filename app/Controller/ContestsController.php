@@ -59,7 +59,7 @@ class ContestsController extends AppController {
             } else {
                 $workout = $this->Workout->find('first', array('conditions' => array('Workout.contest_id' => $match['Contest']['id'])));
                 $matchs[$key]['Contest']['location'] = $workout['Workout']['location_name'];
-                $matchs[$key]['Contest']['date'] = $workout['Workout']['date'];
+                $matchs[$key]['Contest']['date'] = $this->createDate($workout['Workout']['date']);
             }
         }
 
@@ -76,7 +76,7 @@ class ContestsController extends AppController {
                    $my[$key]['Contest']['full'] = true;
                 }
                 $my[$key]['Contest']['location'] = $count[0]['Workout']['location_name'];
-                $my[$key]['Contest']['date'] = $count[0]['Workout']['date'];
+                $my[$key]['Contest']['date'] = $this->createDate($count[0]['Workout']['date']);
             }
         }
         $this->set('matchs', $matchs);
@@ -105,9 +105,13 @@ class ContestsController extends AppController {
         $member1 = $this->Member->find('first', array('conditions' => array('id' => $workouts[0]['Workout']['member_id'] )));
         if(isset($workouts[1])) {
             $member2 = $this->Member->find('first', array('conditions' => array('id' => $workouts[1]['Workout']['member_id'] )));
-            $contest['Member2'] = array('email' => $member2['Member']['email'], 'id' => $member2['Member']['id']);
+            $contest['Member2'] = array('email' => $member2['Member']['email'], 
+                                        'id' => $member2['Member']['id'],
+                                        'image' => $this->Member->createImagePath($member2['Member']['id']));
         }
-        $contest['Member1'] = array('email' => $member1['Member']['email'], 'id' => $member1['Member']['id']);
+        $contest['Member1'] = array('email' => $member1['Member']['email'],
+                                    'id' => $member1['Member']['id'], 
+                                    'image' => $this->Member->createImagePath($member1['Member']['id']));
         $contest['Workout'] = array('date' => $this->createDate($workouts[0]['Workout']['date']), 
                                     'location' => $workouts[0]['Workout']['location_name'],
                                     'description' => $workouts[0]['Workout']['description'],
