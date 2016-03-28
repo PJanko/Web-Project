@@ -13,7 +13,7 @@
 					<nav id="nav">
 						<?php
 							echo $this->Html->link('Classements', array('controller' => 'members', 'action' => 'login'));
-							echo $this->Html->link('Séances', array('controller' => 'pages', 'action' => 'accueil'));
+							echo $this->Html->link('Séances', array('controller' => 'workouts', 'action' => 'index'));
 							echo $this->Html->link('Compétitions', array('controller' => 'contests', 'action' => 'index'));
 							echo $this->Html->link('Objets Co', array('controller' => 'devices', 'action' => 'index'));
 							echo $this->Html->link('Mon Compte', array('controller' => 'members', 'action' => 'account'));
