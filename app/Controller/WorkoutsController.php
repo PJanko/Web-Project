@@ -39,24 +39,38 @@ class WorkoutsController extends AppController {
 
 
 	// Workout
-	public function workout() {
-
-
+	public function index() {
 		if ($this->request->is('post')) {
-			if(($this->request->data['Workout']['date'] == $this->request->data['Workout']['end_date']) {
+			if($this->request->data['Workout']['date'] == $this->request->data['Workout']['end_date']) {
 				$this->Flash->error(__('Les dates ne correspondent pas'));
 				//return $this->redirect(array('action' => 'workout'));
 			}
+			$this->request->data['Workout']['member_id'] = $this->Auth->user('id');
 			$this->Workout->create();
             if ($this->Workout->save($this->request->data)) {
                 $this->Flash->success(__("L'utilisateur a été correctement enregistré son activité !"));
                 //return $this->redirect(array('action' => 'workout'));
             }
             $this->Flash->error(__("L'utilisateur n'a pas pu être enregistré, veuillez réessayer !"));
-            return $this->redirect(array('action' => 'workout'));
-        }
-
+            //return $this->redirect(array('action' => 'workout'));
 		}
+		$workouts = $this->Workout->find('all', array('conditions' => array('Workout.member_id' => $this->Auth->user('id'))));
+		//pr($workouts);die();
+		$this->set('workouts', $workouts);
 
 	}
+
+	/*public function delete($id) {
+
+		$workouts = $this->Workout->findById($id)['Device'];
+
+		if($device['member_id'] == $this->Auth->user('id')) {
+			$this->Device->delete($id);
+			$this->Flash->success(__("L'objet \"".$device['description']."\" a été correctement supprimé de votre liste !"));
+			return $this->redirect(array('action' => 'index'));
+		} else {
+			$this->Flash->error(__('Erreur, vous ne possédez pas cet objet !'));
+			return $this->redirect(array('action' => 'index'));
+		}
+	}*/
 }

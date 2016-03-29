@@ -3,17 +3,32 @@
 		<div class="container">
 			<div class="row">
 				<div class="6u 12u(mobile)">
-					<a href="#" class="bordered-feature-image"><?php echo $this->Html->image($userInfo['image'], array('alt' => 'Photo de profil'));?></a>
-				</div>
-				<div class="6u 12u(mobile)">
-						<div class="4u 12u(mobile)">
 
-									<!-- Box #2 -->
+					<!-- Box #2 -->
 										<section>
 											<header>
-												<h2>What We Do</h2>
-												<h3>A subheading about what we do</h3>
+												<h2>Activités</h2>
+												<h3>Dernières séances</h3>
 											</header>
+											<?php
+												/*foreach( $workouts as $workout) {
+													echo 	'<li>
+															<div class="row">
+																<div class="8u 12u(mobile)">
+																<p>'.$workout['Workout']['description'].'</p>
+																<span>Numéro de Série : '.$workout['Workout']['serial'].'</span></div>
+																<div class="4u 12u(mobile)">';
+													echo $this->Html->link('Supprimer',
+															array('controller' => 'devices', 'action' => 'delete', $workout['Device']['id']),
+															array('class' => 'button-medium'));
+														echo $this->Html->link('Bloquer',
+												array('controller' => 'devices', 'action' => 'deny', $workout['Workout']['id']),
+												array('class' => array('button-medium', 'orange')));
+										echo			'</div>
+													</div>
+												</li>';
+									}*/
+								?>
 											<ul class="check-list">
 												<li>Sed mattis quis rutrum accum</li>
 												<li>Eu varius nibh suspendisse lorem</li>
@@ -23,35 +38,25 @@
 											</ul>
 										</section>
 
-								</div>
-								<div class="4u 12u(mobile)">
+				</div>
+				<div class="6u 12u(mobile)">
 
-									<!-- Box #3 -->
-										<section>
-											<header>
-												<h2>What People Are Saying</h2>
-												<h3>And a final subheading about our clients</h3>
-											</header>
-											<ul class="quote-list">
-												<li>
-													<img src="../img/pic06.jpg" alt="" />
-													<p>"Neque nisidapibus mattis"</p>
-													<span>Jane Doe, CEO of UntitledCorp</span>
-												</li>
-												<li>
-													<img src="../img/pic07.jpg" alt="" />
-													<p>"Lorem ipsum consequat!"</p>
-													<span>John Doe, President of FakeBiz</span>
-												</li>
-												<li>
-													<img src="../img/pic08.jpg" alt="" />
-													<p>"Magna veroeros amet tempus"</p>
-													<span>Mary Smith, CFO of UntitledBiz</span>
-												</li>
-											</ul>
-										</section>
+					<!-- Box #3 -->
 
-								</div>
+						<h2>Ajout relevé</h2>
+
+						<div>
+							<?php echo $this->Form->create('Workout',array('action' => 'index','method' => 'post'));?>
+								<input name="data[Workout][date]" type="text" placeholder="Date de début">
+								<input name="data[Workout][end_date]" type="text" placeholder="Date de fin">
+								<input name="data[Workout][location_name]" type="text" placeholder="Lieux">
+								<input name="data[Workout][description]" type="text" placeholder="Description">
+								<input name="data[Workout][sport]" type="text" placeholder="Sport">
+								<input name="data[Workout][contest_id]" type="text" placeholder="Identifiant compétition">
+								<input class="button-big" type="submit" value="Enregister">
+							<?php echo $this->Form->end(); ?>
+						</div>
+
 				</div>
 			</div>
 		</div>
