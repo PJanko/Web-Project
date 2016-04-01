@@ -27,6 +27,7 @@ class ApiController extends AppController {
 
 	public function beforeFilter() {
         parent::beforeFilter();
+        $this->Auth->allow();
     }
 
 	public function beforeRender() {
@@ -184,6 +185,59 @@ class ApiController extends AppController {
         	return $this->set('_serialize', array()); // Nothing to serialize
 		}
 	}
+
+
+	/**
+	 *		Register a new object as trusted automatically
+	 */
+	public function register($username, $password, $uuid, $d) {
+
+		$login=false;
+
+		$user = $this->Member->findByEmail($username);
+
+		if($user) {
+			$storedHash = $user['Member']['password'];
+			$newHash = Security::hash($password, 'blowfish', $storedHash);
+		} else {
+			$this->response->statusCode(401); // Unauthorized
+			$this->set('login', $login);
+        	return $this->set('_serialize', array("login")); // return login false
+		}
+		
+
+		if($storedHash == $newHash) {	// username and password matches
+
+			$device = $this->Device->find('first', array('conditions' => array('Device.member_id' => $user['Member']['id'], 'Device.serial' => $uuid)));
+			
+			if($device) {	// Device already exist
+				if(!$device['Device']['trusted']) {	// if not already trusted
+					$this->Device->id = $device['Device']['id'];
+					$this->Device->saveField('trusted', 1);	// trust it
+				}
+				$this->response->statusCode(200);	//Conflict
+				$this->set('id', $device['Device']['id']);
+				$login = true;
+			} else {
+				$this->Device->create();
+				$this->Device->save(array('member_id' => $user['Member']['id'], 'serial' => $uuid, 'description' => $d, 'trusted' => 1));
+				$this->set('id', $this->Device->getLastInsertId());
+				$this->response->statusCode(201); // Created
+        		$login = true;
+			}
+
+		} else {
+			$this->response->statusCode(401); // Unauthorized
+		}
+		$this->set('login', $login);
+		return $this->set('_serialize', array("login", "id")); // return login state
+	}
+
+
+	/**
+	 *
+	 */
+	public function workout_add() {}
 
 }
 

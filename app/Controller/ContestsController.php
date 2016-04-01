@@ -28,7 +28,7 @@ class ContestsController extends AppController {
 
     public function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->deny(); // Allow all (unlock the project)
+        $this->Auth->deny(); // Deny all (lock the project)
     }
 
     public function beforeRender() {
