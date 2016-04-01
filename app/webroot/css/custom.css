@@ -91,3 +91,10 @@ div.social-login {
 input, textarea, select {
 	width: 100%;
 }
+
+input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-left: 30px;
+    margin-bottom : 20px;
+}

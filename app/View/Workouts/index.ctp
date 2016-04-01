@@ -48,8 +48,10 @@
 								<input name="data[Workout][location_name]" type="text" placeholder="Lieux">
 								<input name="data[Workout][sport]" type="text" placeholder="Sport">
 								<input name="data[Workout][description]" type="text" placeholder="Description">
-								<input name="data[Workout][contest_id]" type="text" placeholder="Identifiant compétition">
-								<input class="button-medium" type="submit" value="Enregister">
+								<p><h2>Compétitions</h2>
+								<div id='radio-group'><input type="radio" name="competition" value="oui" id="oui" /> Oui
+								<input type="radio" name="competition" value="non" id="non" checked="checked" />Non</div>
+								<input id="submit" class="button-medium" type="submit" value="Enregister">
 							<?php echo $this->Form->end(); ?>
 						</div>
 						</section>
