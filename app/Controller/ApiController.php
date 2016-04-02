@@ -237,7 +237,122 @@ class ApiController extends AppController {
 	/**
 	 *
 	 */
-	public function workout_add() {}
+	public function workout_add($date, $end, $location, $d, $sport, $id) {
+		$device = $this->Device->find('first', array('conditions' => array('Device.id' => $id, 'Device.trusted' => 1)));
+
+		$date = date("Y-m-d H:i:s", (int)$date);
+		$end = date("Y-m-d H:i:s", (int)$end);
+
+		if($device) { // Add the workout to the member
+			$device = $device['Device'];
+			$this->Workout->create();
+			$workout = array('Workout' => array( "member_id" => $device['member_id'],
+												 "date" => $date,
+												 "end_date" => $end,
+												 "location_name" => $location,
+												 "description" => $d,
+												 "sport" => $sport));
+			$Done = $this->Workout->save($workout) ? true : false;
+			$this->response->statusCode(401);
+			$this->set('Done', $Done);
+			$this->set("_serialize", array('Done'));
+		} else {
+			$this->response->statusCode(401);
+			$this->set('Done', false);
+			$this->set("_serialize", array('Done'));
+		}
+	}
+
+	/**
+	 *
+	 */
+	public function log_add($wkt, $date, $lat, $long, $type, $value, $id) {
+		$device = $this->Device->find('first', array('conditions' => array('Device.id' => $id, 'Device.trusted' => 1)));
+		$workout = $this->Workout->findById($wkt);
+
+		$date = date("Y-m-d H:i:s", (int)$date);	// MySQL Date format
+
+		if($device && $workout && $workout['Workout']['member_id'] == $device['Device']['member_id']) { // Add the log to the workout
+			$device = $device['Device'];
+			$this->Log->create();
+			$log = array('Log' => array( "member_id" => $device['member_id'],
+										 "date" => $date,
+										 "workout_id" => $workout['Workout']['id'],
+										 "device_id" => $device['id'],
+										 "location_latitude" => $lat,
+										 "location_logitude" => $long,
+										 "log_type" => $type,
+										 "log_value" => $value));
+			$Done = $this->Log->save($log) ? true : false;
+			$this->response->statusCode(401);
+			$this->set('Done', $Done);
+			$this->set("_serialize", array('Done'));
+		} else {
+			$this->response->statusCode(401);
+			$this->set('Done', false);
+			$this->set("_serialize", array('Done'));
+		}
+	}
+
+
+	/**
+	 *
+	 */
+	public function workout($id, $did = null) {
+		// No second argument, wants the list of the availables workouts
+		if($did == null) {
+			$device = $this->Device->find('first', array('conditions' => array('Device.id' => $id, 'Device.trusted' => 1)));
+			if($device) {
+				$workouts = $this->Workout->find('all', array('conditions' => array('member_id' => $device['Device']['member_id'])));
+				$list = array();
+				foreach ($workouts as $workout) {
+					array_push($list, $workout['Workout']);
+				}
+				$this->set('list', $list);
+				$this->set('_serialize', array('list'));
+			} else {
+				$this->response->statusCode(404);	// nothing found
+				$this->set("_serialize", array());
+			}
+		} else { // Wants only one workout
+			$device = $this->Device->find('first', array('conditions' => array('Device.id' => $did, 'Device.trusted' => 1)));
+			$workout = $this->Workout->findById($id);
+			if($device && $workout && $device['Device']['member_id'] == $workout['Workout']['member_id']) {
+				$this->set('workout', $workout['Workout']);
+				$this->set('_serialize', array('workout'));
+			} else {
+				$this->response->statusCode(404);	// nothing found
+				$this->set("_serialize", array());
+			}
+		}
+	}
+
+
+	/**
+	 *
+	 */
+	public function logs($wid, $did) {
+		
+		$device = $this->Device->find('first', array('conditions' => array('Device.id' => $did, 'Device.trusted' => 1)));
+		$workout = $this->Workout->findById($wid);
+		if($device && $workout && $device['Device']['member_id'] == $workout['Workout']['member_id']) {
+			$logs = $this->Log->find('all', array('conditions' => array('Log.workout_id' => $wid, 'Log.device_id' => $did)));
+			if($logs) {
+				$list = array();
+				foreach ($logs as $log) {
+					array_push($list, $log['Log']);
+				}
+				$this->set('list', $list);
+				$this->set('_serialize', array('list'));
+			} else {
+				$this->response->statusCode(404);	// nothing found
+				$this->set("_serialize", array());
+			}
+		} else {
+			$this->response->statusCode(401);	// Unauthorized
+			$this->set("_serialize", array());
+		}
+	}
 
 }
 
