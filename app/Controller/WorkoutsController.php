@@ -53,6 +53,9 @@ class WorkoutsController extends AppController {
             }
 
 		}
+		if (isset($this->params['url']['contest'])){
+			$this->set('contest', true);
+		}
 		$workouts = $this->Workout->find('all', array('conditions' => array('Workout.member_id' => $this->Auth->user('id'))));
 		//pr($workouts);die();
 		$this->set('workouts', $workouts);
@@ -72,4 +75,5 @@ class WorkoutsController extends AppController {
 			return $this->redirect(array('action' => 'index'));
 		}
 	}
+
 }

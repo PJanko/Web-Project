@@ -49,8 +49,17 @@
 								<input name="data[Workout][sport]" type="text" placeholder="Sport">
 								<input name="data[Workout][description]" type="text" placeholder="Description">
 								<p><h2>Compétitions</h2>
-								<div id='radio-group'><input type="radio" name="competition" value="oui" id="oui" /> Oui
-								<input type="radio" name="competition" value="non" id="non" checked="checked" />Non</div>
+								<?php if(isset($contest)) { ?>
+								<div id='radio-group'><input type="radio" name="competition" value="oui" id="oui" checked="checked" /> Oui
+								<input type="radio" name="competition" value="non" id="non" />Non</div>
+								<input class='contest_input' name='data[Contest][name]' type='text' placeholder='Nom du Championnat'>
+								<input class="contest_input" name="data[Contest][type]" type="text" placeholder="Type de Championnat">
+								<input class="contest_input" name="data[Contest][description]" type="text" placeholder="Description">
+
+								<?php } else { ?>
+									<div id='radio-group'><input type="radio" name="competition" value="oui" id="oui" /> Oui
+									<input type="radio" name="competition" value="non" id="non" checked="checked" />Non</div>
+								<?php } ?>
 								<input id="submit" class="button-medium" type="submit" value="Enregister">
 							<?php echo $this->Form->end(); ?>
 						</div>
