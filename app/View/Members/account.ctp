@@ -3,7 +3,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="6u 12u(mobile)">
-					<a href="#" class="bordered-feature-image"><?php echo $this->Html->image($userInfo['image'], array('alt' => 'Photo de profil'));?></a>
+					<div class="bordered-feature-image"><?php echo $this->Html->image($userInfo['image'], array('alt' => 'Photo de profil'));?></div>
 				</div>
 				<div class="6u 12u(mobile)">
 					<ul class="quote-list">
@@ -27,7 +27,7 @@
 							<?php echo $this->Form->end(); ?>
 						</li>
 					</ul>		
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>

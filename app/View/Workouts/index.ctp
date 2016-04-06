@@ -46,8 +46,8 @@
 
 						<div>
 							<?php echo $this->Form->create('Workout',array('action' => 'index','method' => 'post'));?>
-								<input name="data[Workout][date]" type="text" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
-								<input name="data[Workout][end_date]" type="text" placeholder="Date de fin AAAA-MM-JJ hh:mm:ss">
+								<input name="data[Workout][date]" type="datetime" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
+								<input name="data[Workout][end_date]" type="datetime" placeholder="Date de fin AAAA-MM-JJ hh:mm:ss">
 								<input name="data[Workout][location_name]" type="text" placeholder="Lieu">
 								<input name="data[Workout][sport]" type="text" placeholder="Sport">
 								<input name="data[Workout][description]" type="text" placeholder="Description">
