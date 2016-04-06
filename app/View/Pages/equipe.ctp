@@ -20,7 +20,7 @@
 
 									<!-- Feature #2 -->
 										<section>
-											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/sport4-r.jpg", array('alt' => 'Photo de profil'));?></div>
+											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/Olivier.jpg", array('alt' => 'Photo de profil'));?></div>
 											<h2>Olivier DJAMA</h2>
 											<p>
 												<strong>Community Manager</strong> chez SportManager
