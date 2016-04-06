@@ -17,16 +17,16 @@
 																					echo 	'<li>
 													<div class="row">
 														<div class="8u 12u(mobile)">
-														<h2>Sport : '.$workout['Workout']['sport'].'</h2>
-														<div>Date : '.$workout['Workout']['date'].'</div>
-														<div>Description : '.$workout['Workout']['description'].'</div>
-														<div>Lieu : '.$workout['Workout']['location_name'].'</div></div>
+														<h2>Sport : '.$Workout['Workout']['sport'].'</h2>
+														<div>Date : '.$Workout['Workout']['date'].'</div>
+														<div>Description : '.$Workout['Workout']['description'].'</div>
+														<div>Lieu : '.$Workout['Workout']['location_name'].'</div></div>
 														<div class="4u 12u(mobile)">';
 											echo $this->Html->link('Supprimer',
-													array('controller' => 'workouts', 'action' => 'delete', $workout['Workout']['id']),
+													array('controller' => 'workouts', 'action' => 'delete', $Workout['Workout']['id']),
 													array('class' => 'button-medium'));
 											echo $this->Html->link('Ajouter log', 
-													array('controller' => 'logs', 'action' => 'addlog', $workout['Workout']['id']),
+													array('controller' => 'logs', 'action' => 'addlog', $Workout['Workout']['id']),
 													array('class' => 'button-medium'));
 											echo			'</div>
 														</div>
