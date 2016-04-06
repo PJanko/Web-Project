@@ -55,6 +55,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			echo $this->Html->script('jquery.min');
 			echo $this->Html->script('skel.min');
 			echo $this->Html->script('main');
+			echo $this->Html->script('sorttable');
 			echo $this->Html->script('custom');
 		?>
 	</body>

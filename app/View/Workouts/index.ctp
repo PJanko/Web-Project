@@ -25,7 +25,7 @@
 															echo $this->Html->link('Supprimer',
 																	array('controller' => 'workouts', 'action' => 'delete', $workout['Workout']['id']),
 																	array('class' => 'button-medium'));
-															echo $this->Html->link('Ajouter log', 
+															echo $this->Html->link('Logs', 
 																	array('controller' => 'logs', 'action' => 'addlog', $workout['Workout']['id']),
 																	array('class' => 'button-medium'));
 												echo			'</div>

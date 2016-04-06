@@ -12,7 +12,8 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<?php
-							echo $this->Html->link('Classements', array('controller' => 'classements', 'action' => 'classement'));
+							echo $this->Html->link('Accueil', array('controller' => 'pages', 'action' => 'accueil'));
+							echo $this->Html->link('Classements', array('controller' => 'classements', 'action' => 'index'));
 			                echo $this->Html->link('Se Connecter', array('controller' => 'members', 'action' => 'login'));
 			            ?>
 					</nav>

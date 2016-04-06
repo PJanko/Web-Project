@@ -77,7 +77,7 @@ class DevicesController extends AppController {
 	
 	public function deny($id) {
 
-		$device = $this->Device->findById($id)['Device'];
+		$device = $this->Device->findById($id);
 
 		if(!empty($device)) $device = $device['Device'];
 

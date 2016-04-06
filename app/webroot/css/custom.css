@@ -51,17 +51,17 @@
 		}
 
 	.button-medium.orange {
-		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+		box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(230,126,34, 0.5), inset 0px 0px 0px 2px rgba(230,126,34, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
 		background-color: #e67e22;
 	}
 		.button-medium.orange:hover {
 			background-color: #f39c12;
-			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(230,126,34, 0.5), inset 0px 0px 0px 2px rgba(230,126,34, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
 		}
 
 		.button-medium.orange:active {
 			background-color: #f39c12;
-			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(192, 255, 192, 0.5), inset 0px 0px 0px 2px rgba(96, 255, 96, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
+			box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 0.75), inset 0px 2px 0px 0px rgba(230,126,34, 0.5), inset 0px 0px 0px 2px rgba(230,126,34, 0.85), 3px 3px 3px 1px rgba(0, 0, 0, 0.15);
 		}
 
 
@@ -108,4 +108,20 @@ input[type="radio"] {
 }
 .check-list li p {
    margin-bottom: 5px;
+}
+
+/* Sortable tables */
+table.sortable thead {
+    background-color:#eee;
+    color:#666666;
+    font-weight: bold;
+    cursor: default;
+}
+
+.sortable td, .sortable th{
+	padding: 5px 10px;
+}
+#content .button-medium {
+	color: #fff;
+	margin: 5px;
 }
