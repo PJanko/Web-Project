@@ -9,9 +9,9 @@
 									<!-- Feature #1 -->
 										<section>
 											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/sport3-r.jpg", array('alt' => 'Photo de profil'));?></div>
-											<h2>Bienvenue Chez SportManager</h2>
+											<h2>Etienne NATIVEL</h2>
 											<p>
-												Inscrivez-vous pour avoir accès aux nombreux outils de SportManager, une autre façon de voir le sport !
+												<strong>Back-end Developper</strong> chez SportManager
 											</p>
 										</section>
 
@@ -21,9 +21,9 @@
 									<!-- Feature #2 -->
 										<section>
 											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/sport4-r.jpg", array('alt' => 'Photo de profil'));?></div>
-											<h2>Prévois tes entrainements</h2>
+											<h2>Olivier DJAMA</h2>
 											<p>
-												Avec SportManager prévois tes entrainements ou compétitions pour pouvoir enregister tes perfomances. Grâce à l'application SportManager tu pourras sur le terrain ajouter des informations ou des résultats.
+												<strong>Community Manager</strong> chez SportManager
 											</p>
 										</section>
 
@@ -33,9 +33,9 @@
 									<!-- Feature #3 -->
 										<section>
 											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/sport5-r.jpg", array('alt' => 'Photo de profil'));?></div>
-											<h2>Connecte tes objets</h2>
+											<h2>Pierre JANKOWIEZ</h2>
 											<p>
-												SportManager propose une interface pour tes objets connectés. Tes performances ou resultats seront enregistrés automatiquement par les objets que tu auras validé.
+												<strong>Designer</strong> chez SportManager 
 											</p>
 										</section>
 
@@ -45,9 +45,9 @@
 									<!-- Feature #4 -->
 										<section>
 											<div class="bordered-feature-image"><?php echo $this->Html->image("/img/sport6-r.jpg", array('alt' => 'Photo de profil'));?></div>
-											<h2>Sport Social</h2>
+											<h2>Etienne ORMEZANNO</h2>
 											<p>
-												Mets en relation ton profil SportManager avec tes profils Facebook & Google. Cela te permettra de partager plus facilement tes exploits.
+												<strong>Android Developper</strong> chez SportManager.
 											</p>
 										</section>
 

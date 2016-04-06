@@ -6,31 +6,24 @@
 
 								<!-- Links -->
 									<section>
-										<h2>Links to Important Stuff</h2>
+										<h2>Pages statiques</h2>
 										<div>
 											<div class="row">
-												<div class="3u 12u(mobile)">
+												<div class="4u 12u(mobile)">
 													<ul class="link-list last-child">
-														<li><a href="#">Neque amet dapibus</a></li>
-														<li><a href="#">Sed mattis quis rutrum</a></li>
+														<li><?php echo $this->Html->link('Accueil', array('controller' => 'pages', 'action' => 'accueil'));?></li>
+														<li><?php echo $this->Html->link('Contact', array('controller' => 'pages', 'action' => 'contact'));?></li>
 													</ul>
 												</div>
-												<div class="3u 12u(mobile)">
+												<div class="4u 12u(mobile)">
 													<ul class="link-list last-child">
-														<li><a href="#">Neque amet dapibus</a></li>
-														<li><a href="#">Sed mattis quis rutrum</a></li>
+														<li><?php echo $this->Html->link('Equipe', array('controller' => 'pages', 'action' => 'equipe'));?></li>
+														<li><?php echo $this->Html->link('FAQ', array('controller' => 'pages', 'action' => 'faq'));?></li>
 													</ul>
 												</div>
-												<div class="3u 12u(mobile)">
+												<div class="4u 12u(mobile)">
 													<ul class="link-list last-child">
-														<li><a href="#">Neque amet dapibus</a></li>
-														<li><a href="#">Sed mattis quis rutrum</a></li>
-													</ul>
-												</div>
-												<div class="3u 12u(mobile)">
-													<ul class="link-list last-child">
-														<li><a href="#">Neque amet dapibus</a></li>
-														<li><a href="#">Sed mattis quis rutrum</a></li>
+														<li><?php echo $this->Html->link('Mentions Légales', array('controller' => 'pages', 'action' => 'mentions'));?></li>
 													</ul>
 												</div>
 											</div>
