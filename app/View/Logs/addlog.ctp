@@ -22,12 +22,10 @@
 														<div>Description : '.$Workout['Workout']['description'].'</div>
 														<div>Lieu : '.$Workout['Workout']['location_name'].'</div></div>
 														<div class="4u 12u(mobile)">';
-											echo $this->Html->link('Supprimer',
-													array('controller' => 'workouts', 'action' => 'delete', $Workout['Workout']['id']),
+											echo $this->Html->link('Retour',
+													array('controller' => 'workouts', 'action' => 'index', $Workout['Workout']['id']),
 													array('class' => 'button-medium'));
-											echo $this->Html->link('Ajouter log', 
-													array('controller' => 'logs', 'action' => 'addlog', $Workout['Workout']['id']),
-													array('class' => 'button-medium'));
+											
 											echo			'</div>
 														</div>
 													</li>';
@@ -72,7 +70,8 @@
 						<h2>Ajouter log</h2>
 
 						<div>
-							<?php echo $this->Form->create('Log',array('action' => 'addlog/'.$id, 'method' => 'post'));?>
+							<?php
+								echo $this->Form->create('Log',array('action' => 'addlog/'.$id,'method' => 'post'));?>
 								<input name="data[Log][date]" type="text" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
 								<input name="data[Log][location_latitude]" type="text" placeholder="Latitude">
 								<input name="data[Log][location_logitude]" type="text" placeholder="Longitude">
