@@ -48,13 +48,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 			echo $this->fetch('content');
 			echo $this->element('footer');
 		?>
-			
-		<?php 
-			//echo $this->element('sql_dump'); 
+
+		<?php
+			//echo $this->element('sql_dump');
 			//echo $this->element('facebook-sdk');
 			echo $this->Html->script('jquery.min');
 			echo $this->Html->script('skel.min');
 			echo $this->Html->script('main');
+			echo $this->Html->script('custom');
 		?>
 	</body>
 </html>
