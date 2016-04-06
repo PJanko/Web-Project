@@ -72,7 +72,7 @@
 						<h2>Ajouter log</h2>
 
 						<div>
-							<?php echo $this->Form->create('Log',array('action' => 'addlog','method' => 'post'));?>
+							<?php echo $this->Form->create('Log',array('action' => 'addlog/'.$id, 'method' => 'post'));?>
 								<input name="data[Log][date]" type="text" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
 								<input name="data[Log][location_latitude]" type="text" placeholder="Latitude">
 								<input name="data[Log][location_logitude]" type="text" placeholder="Longitude">

@@ -18,11 +18,11 @@ class LogsController extends AppController
 
 	public function addlog($id){
 		$workout = $this->Workout->findById($id);
+		$this->set('id', $id);
 		//pr($workout);die();
 		if($workout) {
 			$this->set('Workout', $workout);
 		}
-		
 		//if($log['member_id'] == $this->Auth->user('id')) {
 			if ($this->request->is('post')){
 				$this->request->data['Log']['member_id'] = $this->Auth->user('id');
