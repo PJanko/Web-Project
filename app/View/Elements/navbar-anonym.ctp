@@ -12,7 +12,7 @@
 				<!-- Nav -->
 					<nav id="nav">
 						<?php
-							echo $this->Html->link('Classements', array('controller' => 'members', 'action' => 'login'));
+							echo $this->Html->link('Classements', array('controller' => 'classements', 'action' => 'classement'));
 			                echo $this->Html->link('Se Connecter', array('controller' => 'members', 'action' => 'login'));
 			            ?>
 					</nav>

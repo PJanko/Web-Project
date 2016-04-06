@@ -20,13 +20,10 @@
 																		<h2>Sport : '.$workout['Workout']['sport'].'</h2>
 																		<div>Date : '.$workout['Workout']['date'].'</div>
 																		<div>Description : '.$workout['Workout']['description'].'</div>
-																		<div>Lieu : '.$workout['Workout']['location_name'].'</div></div>
+																		<div>Lieux : '.$workout['Workout']['location_name'].'</div></div>
 																		<div class="4u 12u(mobile)">';
 															echo $this->Html->link('Supprimer',
 																	array('controller' => 'workouts', 'action' => 'delete', $workout['Workout']['id']),
-																	array('class' => 'button-medium'));
-															echo $this->Html->link('Ajouter log', 
-																	array('controller' => 'logs', 'action' => 'addlog', $workout['Workout']['id']),
 																	array('class' => 'button-medium'));
 												echo			'</div>
 															</div>
@@ -48,11 +45,11 @@
 							<?php echo $this->Form->create('Workout',array('action' => 'index','method' => 'post'));?>
 								<input name="data[Workout][date]" type="text" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
 								<input name="data[Workout][end_date]" type="text" placeholder="Date de fin AAAA-MM-JJ hh:mm:ss">
-								<input name="data[Workout][location_name]" type="text" placeholder="Lieu">
+								<input name="data[Workout][location_name]" type="text" placeholder="Lieux">
 								<input name="data[Workout][sport]" type="text" placeholder="Sport">
 								<input name="data[Workout][description]" type="text" placeholder="Description">
 								<input name="data[Workout][contest_id]" type="text" placeholder="Identifiant compétition">
-								<input class="button-medium" type="submit" value="Enregistrer">
+								<input class="button-medium" type="submit" value="Enregister">
 							<?php echo $this->Form->end(); ?>
 						</div>
 						</section>

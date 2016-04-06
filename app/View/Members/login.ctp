@@ -16,7 +16,7 @@
 								<input name="data[Member][email]" type="text" placeholder="E-Mail">
 								<input name="data[Member][password]" type="password" placeholder="Mot de Passe">
 								<input name="data[Member][confirm]" type="password" placeholder="Confirmation">
-								<input class="button-medium" type="submit" value="Enregister">
+								<input class="button-medium" type="submit" value="Enregistrer">
 							<?php echo $this->Form->end(); ?>
 						</section>
 

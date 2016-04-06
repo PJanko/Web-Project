@@ -40,6 +40,7 @@ class WorkoutsController extends AppController {
 
 	// Workout
 	public function index() {
+		
 		if ($this->request->is('post')) {
 			if($this->request->data['Workout']['date'] == $this->request->data['Workout']['end_date']) {
 				$this->Flash->error(__('Les dates ne correspondent pas'));
