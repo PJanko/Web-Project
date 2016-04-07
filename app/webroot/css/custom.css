@@ -131,3 +131,11 @@ table.sortable thead {
  #content #classement .button-medium {
 	width: auto;
 }
+
+.info {
+	padding: 10px;
+	text-align: center;
+	width: 100%;
+	color: #ed391b;
+	font-style: italic;
+}
