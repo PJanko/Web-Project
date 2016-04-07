@@ -30,6 +30,10 @@ class Member extends AppModel {
             'required' => array(
                 'rule' => 'notBlank',
                 'message' => 'Un email est requis'
+            ),
+            'unique' => array(
+                'rule'    => 'isUnique',
+                'message' => "L'utilisateur existe déjà."
             )
         ),
         'password' => array(

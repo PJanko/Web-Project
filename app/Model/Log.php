@@ -23,11 +23,15 @@
 App::uses('AppModel', 'Model');
 
 class Log extends AppModel {
-	public function logtest(){
-		
-	}
-
-	public $belongsTo = array('Workout');
+	
+	public $validate = array(
+        'log_value' => array(
+            'numeric' => array(
+                'rule' => 'numeric',
+                'message' => 'La valeur doit être un nombre'
+            )
+        )
+    );
 
 }
 

@@ -26,6 +26,8 @@ class LogsController extends AppController
 				$this->Log->create();
 		        if ($this->Log->save($this->request->data)) {
 		            $this->Flash->success(__("Nouveau log ajouté à votre séance"));  
+            	} else {
+            		$this->Flash->error(__($this->Log->validationErrors['log_value'][0]));
             	}
 			}
 			

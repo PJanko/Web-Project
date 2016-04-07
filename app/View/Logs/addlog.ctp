@@ -24,12 +24,7 @@
 														if($Workout['Workout']['contest_id'] != null) {
 																echo "<div class=info>MATCH</div>";
 															}
-														echo '</div><div class="4u 12u(mobile)">';
-											echo $this->Html->link('Retour',
-													array('controller' => 'workouts', 'action' => 'index', $Workout['Workout']['id']),
-													array('class' => 'button-medium'));
-											
-											echo			'</div>
+														echo '</div>
 														</div>
 													</li>';
 										
