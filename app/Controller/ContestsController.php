@@ -35,17 +35,8 @@ class ContestsController extends AppController {
         parent::beforeRender();
     }
 
-    // Créer un nouveau match
+
     public function index() {
-        // Add a new contest
-        /*if ($this->request->is('post')) {
-            $this->Contest->create();
-            if ($this->Contest->save($this->request->data)) {
-                $this->Flash->success(__("Le Match est bien enregistré !"));
-            } else {
-                $this->Flash->error(__("Le match n'a pas pu être enregistré, veuillez réessayer !"));
-            }
-        }*/
         // List all contests to register to
         $matchs = $this->Contest->find('all');
         foreach ($matchs as $key => $match) {
@@ -60,6 +51,7 @@ class ContestsController extends AppController {
                 $workout = $this->Workout->find('first', array('conditions' => array('Workout.contest_id' => $match['Contest']['id'])));
                 $matchs[$key]['Contest']['location'] = $workout['Workout']['location_name'];
                 $matchs[$key]['Contest']['date'] = $this->createDate($workout['Workout']['date']);
+                $matchs[$key]['Contest']['running'] = $this->running($workout['Workout']['date'], $workout['Workout']['end_date']);
             }
         }
 
@@ -75,8 +67,10 @@ class ContestsController extends AppController {
                 if( $this->Workout->find('count', array('conditions' => array('Workout.contest_id' => $m['Contest']['id'] ))) == 2 ) {
                    $my[$key]['Contest']['full'] = true;
                 }
+                $workout = $this->Workout->find('first', array('conditions' => array('Workout.contest_id' => $m['Contest']['id'])));
                 $my[$key]['Contest']['location'] = $count[0]['Workout']['location_name'];
                 $my[$key]['Contest']['date'] = $this->createDate($count[0]['Workout']['date']);
+                $my[$key]['Contest']['running'] = $this->running($workout['Workout']['date'], $workout['Workout']['end_date']);
             }
         }
         $this->set('matchs', $matchs);
@@ -107,14 +101,17 @@ class ContestsController extends AppController {
             $member2 = $this->Member->find('first', array('conditions' => array('id' => $workouts[1]['Workout']['member_id'] )));
             $contest['Member2'] = array('email' => $member2['Member']['email'], 
                                         'id' => $member2['Member']['id'],
+                                        'workout_id' => $workouts[1]['Workout']['id'],
                                         'image' => $this->Member->createImagePath($member2['Member']['id']));
         }
         $contest['Member1'] = array('email' => $member1['Member']['email'],
-                                    'id' => $member1['Member']['id'], 
+                                    'id' => $member1['Member']['id'],
+                                    'workout_id' => $workouts[0]['Workout']['id'], 
                                     'image' => $this->Member->createImagePath($member1['Member']['id']));
         $contest['Workout'] = array('date' => $this->createDate($workouts[0]['Workout']['date']), 
                                     'location' => $workouts[0]['Workout']['location_name'],
                                     'description' => $workouts[0]['Workout']['description'],
+                                    'running' => $this->running($workouts[0]['Workout']['date'], $workouts[0]['Workout']['end_date']),
                                     'sport' => $workouts[0]['Workout']['sport']);
 
         $this->set('contest', $contest);
@@ -122,7 +119,8 @@ class ContestsController extends AppController {
 
     // Fin d'un match
     public function end($id) {
-
+        $this->Flash->error("Nous n'avons pas compris comment terminer un match ?");
+        return $this->redirect(array('action' => 'show', $id));
     }
 
 
@@ -150,6 +148,11 @@ class ContestsController extends AppController {
     private function createDate($date) {
         $phpdate = strtotime( $date );
         return date( 'l d F Y H:i', $phpdate );
+    }
+
+    private function running($date, $end) {
+        if(strtotime($date) <= time() && strtotime($end) >= time()) return true;
+        else return false;
     }
 
 }

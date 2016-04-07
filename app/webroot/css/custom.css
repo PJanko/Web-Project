@@ -121,7 +121,13 @@ table.sortable thead {
 .sortable td, .sortable th{
 	padding: 5px 10px;
 }
-#content .button-medium {
+#content div .button-medium {
 	color: #fff;
-	margin: 5px;
+	margin: 5px 5px 0 5px;
+	width: calc(100% - 10px);
+	text-align: center;
+}
+
+ #content #classement .button-medium {
+	width: auto;
 }

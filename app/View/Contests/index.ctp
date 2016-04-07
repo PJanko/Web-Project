@@ -40,12 +40,16 @@
 															<span>Location : '.$match['Contest']['location'].'</span>
 															<span>Date : '.$match['Contest']['date'].'</span></div>
 															<div class="4u 12u(mobile)">';
-											echo $this->Html->link('Details',
+											if($match['Contest']['running']) {
+												echo '<div class="info">Compétition annulé, Aucun adversaire.</div>';
+											} else {
+												echo $this->Html->link('Details',
 													array('controller' => 'contests', 'action' => 'show', $match['Contest']['id']),
 													array('class' => 'button-medium'));
-											echo $this->Html->link('Participer',
+												echo $this->Html->link('Participer',
 													array('controller' => 'contests', 'action' => 'register', $match['Contest']['id']),
 													array('class' => array('button-medium','green')));
+											}
 											echo			'</div>
 														</div>
 													</li>';
@@ -79,6 +83,15 @@
 											echo $this->Html->link('Details',
 													array('controller' => 'contests', 'action' => 'show', $m['Contest']['id']),
 													array('class' => 'button-medium'));
+											if($m['Contest']['running'] && isset($m['Contest']['full']) ) {
+												echo '<div class="info"> En Cours </div>';
+											} else if( $m['Contest']['running'] && !isset($m['Contest']['full']) ) {
+												echo '<div class="info"> Compétition annulé, aucun adversaire. </div>';
+											} else if( !isset($m['Contest']['full']) ) {
+												echo '<div class="info"> Aucun adversaire pour le moment. </div>';
+											} else {
+												echo '<div class="info"> Vous avez un adversaire ! </div>';
+											}
 											echo			'</div>
 														</div>
 													</li>';

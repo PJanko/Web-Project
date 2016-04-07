@@ -35,32 +35,36 @@ class WorkoutsController extends AppController {
  *
  * @var array
  */
-	public $uses = array();
+	public $uses = array('Contest', 'Workout');
 
 
 	// Workout
 	public function index() {
 		
 		if ($this->request->is('post')) {
-			if($this->request->data['Workout']['date'] == $this->request->data['Workout']['end_date']) {
-				$this->Flash->error(__('Les dates ne correspondent pas'));
-				//return $this->redirect(array('action' => 'workout'));
-			}
+			if(isset($this->request->data['Contest'])) {
+            	$this->Contest->create();
+            	if($this->Contest->save($this->request->data))
+                   	$this->request->data['Workout']['contest_id'] = $this->Contest->id;
+            }
 			$this->request->data['Workout']['member_id'] = $this->Auth->user('id');
 			$this->Workout->create();
             if ($this->Workout->save($this->request->data)) {
-                $this->Flash->success(__("L'utilisateur a été correctement enregistré son activité !"));
-                //return $this->redirect(array('action' => 'workout'));
+            	if(isset($this->Contest->id)) {
+            		$this->Flash->success(__("L'utilisateur a correctement enregistré sa compétition !"));
+            		return $this->redirect(array('controller' => 'Contests', 'action' => 'show', $this->Contest->id));
+            	} else 
+                	$this->Flash->success(__("L'utilisateur a correctement enregistré son activité !"));
             }
-
 		}
 		if (isset($this->params['url']['contest'])){
 			$this->set('contest', true);
 		}
-		$workouts = $this->Workout->find('all', array('conditions' => array('Workout.member_id' => $this->Auth->user('id'))));
-		//pr($workouts);die();
+		$workouts = $this->Workout->find('all', array(
+			'limit' => 5,
+			'order' => array('Workout.date DESC'),
+			'conditions' => array('Workout.member_id' => $this->Auth->user('id'))));
 		$this->set('workouts', $workouts);
-
 	}
 
 	public function delete($id) {

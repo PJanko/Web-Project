@@ -10,7 +10,7 @@
 							<h2>Séance sélectionnée</h2>
 							<section>
 											
-								<ul class="check-list">
+								<ul class="quote-list">
 
 									<?php
 										
@@ -20,8 +20,11 @@
 														<h2>Sport : '.$Workout['Workout']['sport'].'</h2>
 														<div>Date : '.$Workout['Workout']['date'].'</div>
 														<div>Description : '.$Workout['Workout']['description'].'</div>
-														<div>Lieu : '.$Workout['Workout']['location_name'].'</div></div>
-														<div class="4u 12u(mobile)">';
+														<div>Lieu : '.$Workout['Workout']['location_name'].'</div>';
+														if($Workout['Workout']['contest_id'] != null) {
+																echo "<div class=info>MATCH</div>";
+															}
+														echo '</div><div class="4u 12u(mobile)">';
 											echo $this->Html->link('Retour',
 													array('controller' => 'workouts', 'action' => 'index', $Workout['Workout']['id']),
 													array('class' => 'button-medium'));
@@ -36,7 +39,7 @@
 							</section>
 							
 						</header>
-						<ul class="check-list">
+						<ul class="quote-list">
 								<h2>Logs associés</h2>
 								<?php
 									foreach( $Logs as $log) {
@@ -49,6 +52,9 @@
 													<div>Latitude : '.$log['Log']['location_latitude'].'</div>
 													<div>Longitude : '.$log['Log']['location_logitude'].'</div></div>
 													<div class="4u 12u(mobile)">';
+										if($Workout['Workout']['contest_id'] != null) {
+											echo "<div class=info>C'est un match, vous ne pouvez pas supprimer les logs</div>";
+										}
 										echo $this->Html->link('Supprimer',
 												array('controller' => 'logs', 'action' => 'delete', $log['Log']['id']),
 												array('class' => 'button-medium'));
@@ -71,14 +77,18 @@
 
 						<div>
 							<?php
-								echo $this->Form->create('Log',array('action' => 'addlog/'.$id,'method' => 'post'));?>
-								<input name="data[Log][date]" type="text" placeholder="Date de début AAAA-MM-JJ hh:mm:ss">
-								<input name="data[Log][location_latitude]" type="text" placeholder="Latitude">
-								<input name="data[Log][location_logitude]" type="text" placeholder="Longitude">
-								<input name="data[Log][log_type]" type="text" placeholder="Exercice">
-								<input name="data[Log][log_value]" type="text" placeholder="Valeur type">
-								<input class="button-medium" type="submit" value="Ajouter">
-							<?php echo $this->Form->end(); ?>
+							if($Workout['Workout']['contest_id'] != null && !$Workout['Workout']['running']) {
+								echo "<div class=info>Attendez que le match commence pour pouvoir entrer un Log</div>";
+							} else {
+								echo $this->Form->create('Log',array('action' => 'addlog/'.$id,'method' => 'post'));
+								echo '<input name="data[Log][date]" type="text" placeholder="Date : AAAA-MM-JJ hh:mm:ss">';
+								echo '<input name="data[Log][location_latitude]" type="text" placeholder="Latitude">';
+								echo '<input name="data[Log][location_logitude]" type="text" placeholder="Longitude">';
+								echo '<input name="data[Log][log_type]" type="text" placeholder="Exercice">';
+								echo '<input name="data[Log][log_value]" type="text" placeholder="Valeur">';
+								echo '<input class="button-medium" type="submit" value="Ajouter">';
+							 	echo $this->Form->end(); 
+							 } ?>
 						</div>
 						</section>
 				</div>

@@ -12,17 +12,14 @@ class LogsController extends AppController
 {
 	var $uses = array('Log', 'Workout');
 	
-	public function logtest(){
-    	die('test log');
-    }
 
 	public function addlog($id){
 		$workout = $this->Workout->findById($id);
 		$this->set('id', $id);
 		if($workout) {
+			$workout['Workout']['running'] = $this->running($workout['Workout']['date'], $workout['Workout']['end_date']);
 			$this->set('Workout', $workout);
 		}
-		//if($log['member_id'] == $this->Auth->user('id')) {
 			if ($this->request->is('post')){
 				$this->request->data['Log']['member_id'] = $this->Auth->user('id');
 				$this->request->data['Log']['workout_id'] = $id;
@@ -36,13 +33,15 @@ class LogsController extends AppController
 			$logs = $this->Log->find('all', array('conditions' => array(
 				'Log.member_id' => $this->Auth->user('id'),
 				'Log.workout_id' => $id)));
-			debug($logs);
 			$this->set('Logs', $logs);
 			$workouts = $this->Workout->find('all', array('conditions' => array('Workout.member_id' => $this->Auth->user('id'))));
-			//pr($workouts);die();
-		//}
 		
 		
 	}
+
+	 private function running($date, $end) {
+        if(strtotime($date) <= time() && strtotime($end) >= time()) return true;
+        else return false;
+    }
 }
 ?>

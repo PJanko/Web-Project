@@ -12,7 +12,7 @@
 							<h2>Classements par Sport</h2>
 							<h3>Choisi le sport avoir un classement plus précis</h3>
 						</header>
-						<div>
+						<div id="classement">
 						<?php 
 							foreach($sports as $s) {
 								echo $this->Html->link($s['Workout']['sport'], 

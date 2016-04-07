@@ -19,9 +19,12 @@
 									echo "<li><span>".$contest['Workout']['sport']."</span></li>";
 								?>
 								</ul>
-								<?php echo $this->Html->link('Fin du match !', 
-										array('controller' => 'workouts', 'action' => 'end'),
+								<?php 
+								if($contest['Workout']['running'])
+									echo $this->Html->link('Fin du match !', 
+										array('controller' => 'contests', 'action' => 'end', $contest['id']),
 										array('class' => 'button-medium'));
+								else echo "<div class=info> Le match n'a pas encore commencé.</div>"
 								?>
 							</section>
 
@@ -36,6 +39,12 @@
 								<div class="bordered-feature-image">
 								<?php echo $this->Html->image( $contest['Member1']['image'], array('alt' => 'Photo de profil')); ?>
 								</div>
+								<?php 
+								if($contest['Workout']['running'])
+								echo $this->Html->link('Ajouter des logs', 
+										array('controller' => 'logs', 'action' => 'addlog', $contest['Member1']['workout_id']),
+										array('class' => 'button-medium green'));
+								?>
 
 							</section>
 
@@ -53,6 +62,13 @@
 								<div class="bordered-feature-image">
 								<?php echo $this->Html->image($contest['Member2']['image'], array('alt' => 'Photo de profil')); ?>
 								</div>
+
+								<?php 
+								if($contest['Workout']['running'])
+								echo $this->Html->link('Ajouter des logs', 
+										array('controller' => 'logs', 'action' => 'addlog', $contest['Member2']['workout_id']),
+										array('class' => 'button-medium green'));
+								?>
 
 							</section>
 
