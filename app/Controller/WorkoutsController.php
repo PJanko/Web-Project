@@ -70,8 +70,9 @@ class WorkoutsController extends AppController {
 	public function delete($id) {
 
 		$workouts = $this->Workout->findById($id)['Workout'];
+		//pr($workouts); die();
 
-		if($workout['member_id'] == $this->Auth->user('id')) {
+		if($workouts['member_id'] == $this->Auth->user('id')) {
 			$this->Workout->delete($id);
 			//$this->Flash->success(__("L'objet \"".$device['description']."\" a été correctement supprimé de votre liste !"));
 			return $this->redirect(array('action' => 'index'));

@@ -40,6 +40,22 @@ class LogsController extends AppController
 		
 		
 	}
+	
+	public function delete($id){
+		$logs = $this->Log->findById($id)['Log'];
+		$this->set('id', $id);
+		//pr($logs); die();
+		
+		if($logs['member_id'] == $this->Auth->user('id')) {
+			$this->Log->delete($id);
+			$this->Flash->success(__("Le log a été correctement supprimé de votre liste"));
+			return $this->redirect(array('action' => 'addlog'));
+		} else {
+			$this->Flash->error(__('Une erreur est survenue lors de la suppression, veuillez réessayer'));
+			return $this->redirect(array('action' => 'addlog'));
+		}
+		
+	}
 
 	 private function running($date, $end) {
         if(strtotime($date) <= time() && strtotime($end) >= time()) return true;
